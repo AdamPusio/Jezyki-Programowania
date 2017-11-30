@@ -3,18 +3,17 @@
 
 int main() {
   int n,m;
-  printf("Podaj rozmiar tablicy dwuwymiarowej: \n");
-  printf("Kolumny: ");
+  printf("Podaj dwie liczby do tablicy\n");
   scanf("%d", &n); //wczytuje rozmiar n
-  printf("Wiersze: ");
   scanf("%d", &m); //wczytuje rozmiar m
+  int macierz [4][4]; //stała tablica dwuwymiarowa
 
-  int macierz [n][m]; //wczytuje rozmiar n, m do tabeli
-
-  for (int i = 0; i < n; i++) {
-    for (int j = 0; j <  m; j++) {
+  for (int i = 0; i < 4; i++) {
+    for (int j = 0; j < 4; j++) {
       macierz [i][j] = i; //przykładowa zawartość tablicy
-      printf("%d", macierz[i][j]); //wypisuje zawartość podobnie jak w przykładzie
+      macierz [0][0] = n; // wczytuje te liczby do tabeli ?
+      macierz [0][1] = m;
+      printf("%d ", macierz[i][j]); //wypisuje zawartość podobnie jak w przykładzie
     }
     printf("\n");
   }
