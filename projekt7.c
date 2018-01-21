@@ -27,6 +27,7 @@ void commands(); //tutaj przechowuje komendy poruszania się
 void swim(); //płyń :)
 void split_and_save(); //dziel i zapisz w tablicy
 void free_tab(); //czyść tablicę po każdej pętli
+void map(); //pokazuj mapę
 
 int main() {
   welcome(); //przywitanie
@@ -58,6 +59,7 @@ void welcome(){
   printf("Wpisz EXIT, jeżeli chcesz zakończyć rejs!\n" );
 }
 void acctual_situation(){ //wypisz kierunek, współrzędne
+  map();
   printf("Aktualne współrzędne(x,y) = (%d,%d)\n", ship.point_1.x, ship.point_1.y);
   printf("Aktualny kierunek: %c\n", ship.compas[nswe]);
   if (abs(island_1.x - ship.point_1.x)<=1 && abs(island_1.y - ship.point_1.y)<=1)
@@ -95,16 +97,27 @@ void commands(){ //komendy
 }
 void swim(){ //płyń :)
   if (ship.compas[nswe]=='N')
-    ship.point_1.x++;
-  else if (ship.compas[nswe]=='S')
-    ship.point_1.x--;
-  else if (ship.compas[nswe]=='W')
-    ship.point_1.y--;
-  else if (ship.compas[nswe]=='E')
     ship.point_1.y++;
+  else if (ship.compas[nswe]=='S')
+    ship.point_1.y--;
+  else if (ship.compas[nswe]=='W')
+    ship.point_1.x--;
+  else if (ship.compas[nswe]=='E')
+    ship.point_1.x++;
 
   if (island_1.x == ship.point_1.x && island_1.y == ship.point_1.y) {
-    printf("Wpadłeś na wyspę!\n");
+    printf("Zły ruch! Nie możesz wpłynąć na wyspę.\n");
+    if (ship.compas[nswe]=='N')
+      ship.point_1.y--;
+    else if (ship.compas[nswe]=='S')
+      ship.point_1.y++;
+    else if (ship.compas[nswe]=='W')
+      ship.point_1.x++;
+    else if (ship.compas[nswe]=='E')
+      ship.point_1.x--;
+
+
+
   }
 }
 void split_and_save(){
@@ -112,14 +125,14 @@ void split_and_save(){
   int b = 0;
 
   for (int a = 0; str[a] != '\0'; a++){
-    if (isspace(str[a]) || str[a] == ',') {
-      if (isspace(str[a+1]) || str[a+1] == ',') {
+    if (isspace(str[a]) || str[a] == ',') { //jeżeli jest biały znak lub spacja
+      if (isspace(str[a+1]) || str[a+1] == ',') { //czyta o znak do przodu, czyli ew. ciąg n,,l,,w zostanie podzielony
         a ++;
       }
       kol++;
       b = 0;
     }
-    else {
+    else { //w innym wypadku, zapisuj dalej w wierszu
     splitStrings[kol][b] = str[a];
     b++;
     }
@@ -129,5 +142,18 @@ void free_tab(){ //czyści tablice z wartości (nie pamięci)
   memset(str, 0, 100);
   for (int i = 0; i < 10; i++) {
     memset(splitStrings[i], 0, 100); //dwuwymiarowa czyszczenie
+  }
+}
+void map(){
+  char sea[11][11];
+  for (int i = 0; i < 11; i++) {
+    for (int j = 0; j < 11; j++) {
+      sea[i][j] = '~';
+      if (abs(ship.point_1.x + 5)==j && abs(ship.point_1.y + 5)==i)
+        printf("* ");
+      else
+        printf("%c ", sea[i][j]);
+    }
+    printf("\n");
   }
 }
