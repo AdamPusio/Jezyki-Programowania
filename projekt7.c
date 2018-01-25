@@ -145,12 +145,23 @@ void free_tab(){ //czyści tablice z wartości (nie pamięci)
   }
 }
 void map(){
-  char sea[11][11];
-  for (int i = 0; i < 11; i++) {
-    for (int j = 0; j < 11; j++) {
+  char sea[5][5];
+  for (int i = 4; i >= 0; i--) {
+    for (int j = 0; j < 5; j++) {
       sea[i][j] = '~';
-      if (abs(ship.point_1.x + 5)==j && abs(ship.point_1.y + 5)==i)
-        printf("* ");
+      if (i == (abs(ship.point_1.y % 5)) && j == (abs(ship.point_1.x % 5))){
+        if (ship.compas[nswe]=='N')
+          sea[i][j] = '^';
+        else if (ship.compas[nswe]=='S')
+          sea[i][j] = 'v';
+        else if (ship.compas[nswe]=='W')
+          sea[i][j] = '<';
+        else if (ship.compas[nswe]=='E')
+          sea[i][j] = '>';
+
+        
+        printf("%c ", sea[i][j]);
+      }
       else
         printf("%c ", sea[i][j]);
     }
