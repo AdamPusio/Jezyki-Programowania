@@ -30,6 +30,8 @@ void free_tab(); //czyść tablicę po każdej pętli
 void map(); //pokazuj mapę
 int modulo_map_x();
 int modulo_map_y();
+char NS();
+char WE();
 
 int main() {
   welcome(); //przywitanie
@@ -62,7 +64,7 @@ void welcome(){
 }
 void acctual_situation(){ //wypisz kierunek, współrzędne
   map();
-  printf("Aktualne współrzędne(x,y) = (%d,%d)\n", ship.point_1.x, ship.point_1.y);
+  printf("Aktualne współrzędne(x,y) = (%d %c , %d %c)\n", abs(ship.point_1.x), WE(), abs(ship.point_1.y), NS());
   printf("Aktualny kierunek: %c\n", ship.compas[nswe]);
   if (abs(island_1.x - ship.point_1.x)<=1 && abs(island_1.y - ship.point_1.y)<=1)
     printf("Wykryta wyspa w promieniu 1 kratki o współrzędnych(x,y) = (%d,%d) \n", island_1.x, island_1.y);
@@ -194,4 +196,23 @@ int modulo_map_y(){
   else {
     return abs(ship.point_1.y % 5);
   }
+}
+char NS(){
+  if (ship.point_1.y>0) {
+    return 'N';
+  }
+  else if (ship.point_1.y<0) {
+    return 'S';
+  }
+  else return' ';
+}
+
+char WE(){
+  if (ship.point_1.x>0) {
+    return 'E';
+  }
+  else if (ship.point_1.x<0) {
+    return 'W';
+  }
+  else return' ';
 }
