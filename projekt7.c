@@ -28,6 +28,8 @@ void swim(); //płyń :)
 void split_and_save(); //dziel i zapisz w tablicy
 void free_tab(); //czyść tablicę po każdej pętli
 void map(); //pokazuj mapę
+int modulo_map_x();
+int modulo_map_y();
 
 int main() {
   welcome(); //przywitanie
@@ -149,7 +151,7 @@ void map(){
   for (int i = 4; i >= 0; i--) {
     for (int j = 0; j < 5; j++) {
       sea[i][j] = '~';
-      if (i == (abs(ship.point_1.y % 5)) && j == (abs(ship.point_1.x % 5))){
+      if (i == (modulo_map_y()) && j == (modulo_map_x())){
         if (ship.compas[nswe]=='N')
           sea[i][j] = '^';
         else if (ship.compas[nswe]=='S')
@@ -159,12 +161,37 @@ void map(){
         else if (ship.compas[nswe]=='E')
           sea[i][j] = '>';
 
-        
         printf("%c ", sea[i][j]);
       }
       else
         printf("%c ", sea[i][j]);
     }
     printf("\n");
+  }
+}
+int modulo_map_x(){
+  int num;
+  if ((ship.point_1.x < 0 && ship.point_1.x >-100)) {
+    num = 5 - abs(ship.point_1.x % 5);
+    if (num == 5)
+      return 0;
+    else
+      return num;
+  }
+  else {
+    return abs(ship.point_1.x % 5);
+  }
+}
+int modulo_map_y(){
+  int num;
+  if ((ship.point_1.y < 0 && ship.point_1.y >-100)) {
+    num = 5 - abs(ship.point_1.y % 5);
+    if (num == 5)
+      return 0;
+    else
+      return num;
+  }
+  else {
+    return abs(ship.point_1.y % 5);
   }
 }
